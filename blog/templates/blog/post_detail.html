@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<article class="media content-section">
+    <div class="media-body">
+        <h2>{{ post.title }}</h2>
+        <p>By {{ post.author }} on {{ post.date_posted }}</p>
+
+        <p>{{ post.content }}</p>
+
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width:100%; margin-top:10px;">
+        {% endif %}
+
+        {% if post.video %}
+        <video width="100%" controls style="margin-top:10px;">
+            <source src="{{ post.video.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        {% endif %}
+
+        {% if user == post.author %}
+        <hr>
+        <a class="btn btn-secondary" href="{% url 'post-update' post.pk %}">Update</a>
+        <a class="btn btn-danger" href="{% url 'post-delete' post.pk %}">Delete</a>
+        {% endif %}
+    </div>
+</article>
+{% endblock %}
